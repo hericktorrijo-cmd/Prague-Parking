@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="LoggBok.MD" />
+  </Folder>
   <Project Path="Prague Parking/Prague Parking.csproj" />
 </Solution>
