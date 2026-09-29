@@ -1,18 +1,41 @@
-﻿Console.WriteLine("orale");
+﻿string[] garageSpaces = new string[100];
 
-Console.Write("Ange en ålder: ");
-if (int.TryParse(Console.ReadLine(), out int result))
+
+//Tilldelar samtliga platser lediga för att börja med
+for(int i = 0; i < garageSpaces.Length; i++)
 {
-    if (result > 17)
+    garageSpaces[i] = "LEDIG";
+}
+
+//parkingSpots(garageSpaces, 21, 21);
+SpecificSpot(garageSpaces);
+
+//parkingSpots(garageSpaces, 1, 10);
+
+
+//Metod för att skriva ut tillgänglighet, man kan välja om man skulle vilja se specifika platser
+static void parkingSpots(string[] garageSpaces, int min = 1, int max = 100)
+{
+   for(int plats = min; plats <= max; plats++)
     {
-        Console.WriteLine($"Du har fyllt {result} år, grattis du är myndig");
-    }
-    else if (result <= 17)
-    {
-        Console.WriteLine($"Du har inte fyllt 18 än, men du är {result} gammal, grattis!");
+        int index = plats - 1;
+        Console.WriteLine($"Plats {plats} => {garageSpaces[index]}");
     }
 }
-else
+
+//Metod för att se tillgänglighet på en specifik plats
+static void SpecificSpot(string[] garageSpaces)
 {
-    Console.WriteLine("ERROR: Vänligen skriv in ett heltal");
+    Console.WriteLine("Vilken plats vill du se: ");
+    bool input = int.TryParse(Console.ReadLine(), out int number);
+    if(!input || number < 1 || number > garageSpaces.Length)
+    {
+        Console.WriteLine("Ogiltig platsnummer.");
+            return;
+    }
+
+    int index = number - 1; 
+
+    Console.WriteLine($"Plats {number} => {garageSpaces[index]}");
+  
 }
