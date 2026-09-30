@@ -22,3 +22,21 @@ vara i "Main" som tänkt från början, jag kom på att metoderna kan använda s
 
 2026-09-30 kl. 10:00
 Har bestämt mig för att göra om metoden parkingSpots, det den ska göra nu är att den ska visa samtliga parkeringsplatser.
+
+2026-09-30 kl. 11:00
+Angående anteckningen innan, jag ändrade mig igen, nu har jag gjort om parkingSpots så att användaren får själv välja mellan vilka platser
+de vill se tillgängliga platser. Var riktigt skönt eftersom att jag gjorde den helt solo utan hjälp, märker dock att jag kanske får lugna ner
+mig, ju mer jag gör desto mer vill jag implementera. 
+
+2026-09-30 kl. 15:30
+Så nu har jag gjort 2 metoder till, en som tilldelar fordonstypen och en som validerar regnumret, jag är faktiskt riktigt nöjd hittills, jag vet att jag kommer stötta
+på problem så vill inte vara för kaxig men jag behöver googla fram mindre saker för varje gång. Känns faktiskt riktigt bra just nu. 
+Nästa steg är att kombinera mina 2 metoder som jag gjorden nyss så att jag får ett komplett regnummer kombinerat med fordonstypen och sen en ytterliga metod för att
+parkera själva fordonet, känns som att det kommer vara det svåra. Tycker om att göra metoder så att "Main" ska se så rent ut som möjligt. 
+Det enda jag skulle vilja göra är att göra så att regnumret endast kan vara 6 siffror men uppgiften säger 10 så jag håller mig till det, 
+dock lägger jag till ytterligare en if statement så att användaren kan se vad de har skrivit för regnummer inann de bekräftar. 
+
+2026-09-30 kl. 19:20
+Okej jag har kommit halvvägs med själva Parkera fordon metoden, har fått till hur jag ska parkera en bil dock märker jag att MC kommer att vara mycket jobbigare.
+Den här delen var faktiskt mycket svårare att få till än de andra metoderna, fick ta mer hjälp till denna del av metoden. Får fortsätta imorgon, har en ide
+om hur jag kanske kan göra MC delen, får se om det fungerar.
