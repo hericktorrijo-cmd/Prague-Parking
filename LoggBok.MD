@@ -40,3 +40,11 @@ dock lägger jag till ytterligare en if statement så att användaren kan se vad
 Okej jag har kommit halvvägs med själva Parkera fordon metoden, har fått till hur jag ska parkera en bil dock märker jag att MC kommer att vara mycket jobbigare.
 Den här delen var faktiskt mycket svårare att få till än de andra metoderna, fick ta mer hjälp till denna del av metoden. Får fortsätta imorgon, har en ide
 om hur jag kanske kan göra MC delen, får se om det fungerar.
+
+2026-10-01 kl. 13:30
+Klar med parkera fordon metoden, den var faktiskt riktigt jobbig jämfört med de andra metoderna, men den gav mycket också. Ska börja med TaBort fordon metoden näst. 
+
+2026-10-01 kl. 15:30
+Har påbörjat RemoveVehicle metoden, car delen är klar men MC delen är lite mer klurig, behöver använda split metod vet dock bara inte hur jag ska använda den än.
+Vi fortsätter senare. 
+
