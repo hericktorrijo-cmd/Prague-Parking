@@ -48,3 +48,5 @@ Klar med parkera fordon metoden, den var faktiskt riktigt jobbig jämfört med d
 Har påbörjat RemoveVehicle metoden, car delen är klar men MC delen är lite mer klurig, behöver använda split metod vet dock bara inte hur jag ska använda den än.
 Vi fortsätter senare. 
 
+2026-10-01 kl. 23:30
+Nu är RemoveVehicle metoden klar! finns lite småsaker jag vill fixa i utskriften men jag tar det imorgon! Programmet börjar kännas rätt komplett. 

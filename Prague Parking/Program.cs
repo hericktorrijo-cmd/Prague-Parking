@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Design;
+﻿using System.ComponentModel;
+using System.ComponentModel.Design;
 
 string[] garageSpaces = new string[100];
 
@@ -8,8 +9,6 @@ for (int i = 0; i < garageSpaces.Length; i++)
     garageSpaces[i] = "LEDIG";
 }
 
-garageSpaces[0] = "FFG859";
-garageSpaces[1] = "MCFFASF";
 
 Menu(garageSpaces);
 
@@ -24,7 +23,7 @@ static void Menu(string[] garageSpaces)
         Console.WriteLine("3. Visa platser");
         Console.WriteLine("4. Visa specifik plats");
         Console.WriteLine("0. Avsluta");
-        Console.Write("Välj ett alternativ: \n");
+        Console.Write("Välj ett alternativ: ");
 
         bool inputOk = int.TryParse(Console.ReadLine(), out int menuInput);
 
@@ -44,7 +43,7 @@ static void Menu(string[] garageSpaces)
                 
                 break;
             case 2:
-                string licenceNumberToRemove = GetLicenseNumber();
+                RemoveVehicle(garageSpaces);
                 break;
             case 3:
                 ParkingSpots(garageSpaces);
@@ -105,7 +104,7 @@ static string GetLicenseNumber()
         {
             licenseNumber = input;
         }
-        Console.WriteLine($"Du skrev {licenseNumber.Trim().ToUpper()}. Skriv 1 för att fortsätta eller 2 för att backa");
+        Console.Write($"Du skrev {licenseNumber.Trim().ToUpper()}. Skriv 1 för att fortsätta eller 2 för att backa: ");
         string userChoice = Console.ReadLine().Trim();
         if (userChoice == "1")
         {
@@ -173,11 +172,11 @@ static void ParkVehicle(string fullLicenceNumber, string[] garageSpaces)
 }
 
 //Metod för att ta bort fordon // MENY 2.0
-static void RemoveVehicle(string fullLicenceNumber, string[] garageSpaces)
+static void RemoveVehicle(string[] garageSpaces)
 {
     string licenseNumber = GetLicenseNumber();
-    string fullCar = "CAR" + licenseNumber;
-    string fullMc = "MC" + licenseNumber;
+    string fullCar = "CAR#" + licenseNumber;
+    string fullMc = "MC#" + licenseNumber;
 
     for (int i = 0; i < garageSpaces.Length; i++)
     {
@@ -187,6 +186,31 @@ static void RemoveVehicle(string fullLicenceNumber, string[] garageSpaces)
         {
             garageSpaces[i] = "LEDIG";
             Console.WriteLine($"{fullCar} borttaget från plats {i + 1}");
+            return;
+        }
+        if (spot.Contains(fullMc))
+        {
+            string[] mcList = spot.Split(" | ");
+
+            List<string> remaining = new List<string>();
+
+            for(int j = 0; j < mcList.Length; j++)
+            {
+                if(mcList[j] != fullMc)
+                {
+                    remaining.Add(mcList[j]);
+                }
+            }
+
+            if(remaining.Count == 0)
+            {
+                garageSpaces[i] = "LEDIG";
+            }
+            else
+            {
+                garageSpaces[i] = string.Join(" | ", remaining);
+            }
+            Console.WriteLine($"{fullMc} borttaget från plats {i + 1}");
             return;
         }
     }
