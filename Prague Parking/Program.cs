@@ -1,5 +1,5 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.Design;
+﻿using System.ComponentModel.Design;
+using System.Net;
 
 string[] garageSpaces = new string[100];
 
@@ -20,8 +20,9 @@ static void Menu(string[] garageSpaces)
         Console.WriteLine("\n=== GARAGE-MENY ===\n");
         Console.WriteLine("1. Parkera fordon");
         Console.WriteLine("2. Ta bort fordon");
-        Console.WriteLine("3. Visa platser");
-        Console.WriteLine("4. Visa specifik plats");
+        Console.WriteLine("3. Flytta fordon manuellt");
+        Console.WriteLine("4. Visa platser");
+        Console.WriteLine("5. Visa specifik plats");
         Console.WriteLine("0. Avsluta");
         Console.Write("Välj ett alternativ: ");
 
@@ -43,12 +44,16 @@ static void Menu(string[] garageSpaces)
                 
                 break;
             case 2:
-                RemoveVehicle(garageSpaces);
+                string licenceNumberToRemove = GetLicenseNumber();
+                RemoveVehicle(garageSpaces, licenceNumberToRemove);
                 break;
             case 3:
-                ParkingSpots(garageSpaces);
+                MoveVehicleManually(garageSpaces);
                 break;
             case 4:
+                ParkingSpots(garageSpaces);
+                break;
+            case 5:
                 SpecificSpot(garageSpaces);
                 break;
             case 0:
@@ -90,33 +95,42 @@ static string GetVehicleType()
 //Metod för att få regnumret t.ex ABC123 // MENYVAL 1.2
 static string GetLicenseNumber()
 {
-    string licenseNumber;
+    
     while (true)
     {
         Console.Write("Skriv registreringsnummer: ");
-        string input = Console.ReadLine().Trim().ToUpper();
-        if (input.Length > 10)
+        string licenseNumber = Console.ReadLine().Trim().ToUpper();
+        if (licenseNumber.Length > 10)
         {
             Console.WriteLine("registreringsnummer får inte vara mer än 10 tecken");
             continue;
         }
-        else
+
+        bool confirmed = false;
+
+        while (!confirmed)
         {
-            licenseNumber = input;
-        }
-        Console.Write($"Du skrev {licenseNumber.Trim().ToUpper()}. Skriv 1 för att fortsätta eller 2 för att backa: ");
-        string userChoice = Console.ReadLine().Trim();
-        if (userChoice == "1")
-        {
-            break;
-        }
-        else
-        {
-            continue;
+            Console.Write($"Du skrev {licenseNumber.Trim().ToUpper()}. Skriv 1 för att fortsätta eller 2 för att backa: ");
+            string userChoice = Console.ReadLine().Trim();
+            if (userChoice == "1")
+            {
+                confirmed = true;
+            }
+            else if (userChoice == "2")
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Felaktig inmatning.");
+            }
         }
 
+        if(confirmed)
+        {
+            return licenseNumber;
+        }
     }
-    return licenseNumber;
 }
 
 //Metod för att kombinera fordonstyp och reg-nummer och göra ett fulltständigt ID //MENY 1.3 
@@ -170,11 +184,122 @@ static void ParkVehicle(string fullLicenceNumber, string[] garageSpaces)
         return;
     }
 }
+//Metod för att manuellt flytta fordon från en plats till en annan // MENY 2.0
 
-//Metod för att ta bort fordon // MENY 2.0
-static void RemoveVehicle(string[] garageSpaces)
+static void MoveVehicleManually(string[] garageSpaces)
 {
     string licenseNumber = GetLicenseNumber();
+    string fullCar = "CAR#" + licenseNumber;
+    string fullMc = "MC#" + licenseNumber;
+
+    bool isCar = false;
+    bool isMc = false;
+
+    foreach(string spot in  garageSpaces)
+    {
+        if (spot == fullCar)
+        {
+            isCar = true;
+            break;
+        }
+        else if(spot.Contains(fullMc))
+        {
+            isMc = true;
+            break;
+        }
+    }
+
+    if(!isCar && !isMc)
+    {
+        Console.WriteLine("Fordonet hittades inte i garaget.");
+        return;
+    }
+
+    RemoveVehicle(garageSpaces, licenseNumber);
+    PlaceVehicleManually(garageSpaces, licenseNumber, isCar);
+}
+
+//Metod för att placera fordon manuellt, ska främst användas i metoden ovanför (MoveVehicleManually) // MENY 2.1
+//Det vi har är licenseNumber och vi har tagit bort den från en plats, så vi behöver att den här metoden placerar i valfri plats
+static void PlaceVehicleManually(string[] garageSpaces, string licenseNumber, bool isCar)
+{
+
+    int garageSpaceInt;
+
+    while (true)
+    {
+        Console.Write("Vilken plats vill du parkera fordonet på: ");
+        bool validInput = int.TryParse(Console.ReadLine(), out garageSpaceInt);
+        if (validInput != true)
+        {
+            Console.WriteLine("Det måste vara en plats från 1 - 100");
+            continue;
+        }
+        if(validInput)
+        {
+            break;
+        }
+    }
+
+    string spot = garageSpaces[garageSpaceInt - 1];
+
+    if(spot == "LEDIG")
+    {
+        Console.WriteLine("Platsen är ledig.");
+    }
+    else
+    {
+        Console.WriteLine($"Platsen är tagen: {spot}");
+    }
+
+    string fullLicenseNumber;
+    if (isCar)
+    {
+        fullLicenseNumber = "CAR#" + licenseNumber;
+    }
+    else
+    {
+        fullLicenseNumber = "MC#" + licenseNumber;
+    }
+
+    if(isCar)
+    {
+        if(spot == "LEDIG")
+        {
+            garageSpaces[garageSpaceInt - 1] = fullLicenseNumber;
+            Console.WriteLine($"Fordonet {fullLicenseNumber} har parkerats på plats {garageSpaceInt}");
+            return;
+        }
+        
+        else
+        {
+            Console.WriteLine("Platsen är upptagen.");
+            return;
+        }
+    }
+    if(!isCar)
+    {
+        if(spot == "LEDIG")
+        {
+            garageSpaces[garageSpaceInt -1] = fullLicenseNumber;
+            Console.WriteLine($"MC {fullLicenseNumber} har parkerats på plats {garageSpaceInt}");
+            return;
+        }
+        if (spot.StartsWith("MC") && !spot.Contains("|"))
+        {
+            garageSpaces[garageSpaceInt - 1] = spot + " | " + fullLicenseNumber;
+            Console.WriteLine($"MC {fullLicenseNumber} har delat plats på {garageSpaceInt}");
+            return;
+        }
+
+        Console.WriteLine("Platsen är upptagen.");
+        return;
+    }
+}
+//Metod för att ta bort fordon // MENY 3.0
+static void RemoveVehicle(string[] garageSpaces, string licenseNumber)
+{
+    
     string fullCar = "CAR#" + licenseNumber;
     string fullMc = "MC#" + licenseNumber;
 
@@ -214,6 +339,7 @@ static void RemoveVehicle(string[] garageSpaces)
             return;
         }
     }
+    Console.WriteLine($"Hittade inget fordon med det angivna regristeringsnumret");
 }
 
 //Metod för att skriva ut tillgänglighet, man kan se samtliga platser eller mellan 2 tal // MENYVAL 3

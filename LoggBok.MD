@@ -50,3 +50,11 @@ Vi fortsätter senare.
 
 2026-10-01 kl. 23:30
 Nu är RemoveVehicle metoden klar! finns lite småsaker jag vill fixa i utskriften men jag tar det imorgon! Programmet börjar kännas rätt komplett. 
+
+2026-10-02 kl. 12:00
+Att skapa metoden för att manuellt flytta bilen är sjukt svår, har gjort en del men fastnar hela tiden.
+
+2026-10-02 kl. 22:30
+NU ska metoden för att manuellt flytta bilen vara klar, det var det svåraste jag har gjort i detta projekt. Men jag har testat och det ska fungera nu... 
+Det mesta är klar, ska gå igenom imorgon för att se om jag kan förbättra något. 
+Hittade en bugg, om man flyttar på fordon manuellt till en plats som inte finns typ 101 så krashar programmet. 
