@@ -58,3 +58,23 @@ Att skapa metoden för att manuellt flytta bilen är sjukt svår, har gjort en d
 NU ska metoden för att manuellt flytta bilen vara klar, det var det svåraste jag har gjort i detta projekt. Men jag har testat och det ska fungera nu... 
 Det mesta är klar, ska gå igenom imorgon för att se om jag kan förbättra något. 
 Hittade en bugg, om man flyttar på fordon manuellt till en plats som inte finns typ 101 så krashar programmet. 
+
+2026-10-03 kl. 10:00
+Nu är buggen fixad genom att sätta med villkor. Det enda som är kvar är sökfunktion men det ska nog gå att lösa med alla metoder jag har skapat. 
+
+2026-10-03 kl. 11:30
+Jag tänkte börja göra med VG uppgifter men måste börja på lektion 9, så jag lämnar in uppgiften som den är så kanske jag kan optimera mer i framtiden
+för skojs skull. 
+SLUTSATS: 
+Otroligt rolig projekt, lärde mig mycket genom att göra detta, var t.ex. väldigt förvirrad med nestlade for loopar och även brytorden som t.ex. 
+break, continue och return. Men efter att ha använt de så mycket i detta projekt känner jag att jag har koll på det nu. Hade jag haft tid 
+och ork hade jag nog gjort det här projektet på ett lite annorlunda sätt genom fler små metoder som är kopplade till varandra men jag känner mig
+ändå väldigt nöjd med detta projekt. Skulle även funnits lite fler funktioner jag hade lagt till typ som att göra projektet till en
+lista så att användaren själv kan välja antal platser så att systemet skulle kunna användas i vilket garage som helst men uppgiften var
+att det skulle vara 100 platser så en array blev bra. Har även blivit mer bekväm med att välja när jag ska använda while loopar och for loopar samt
+när jag ska använda switch satser och if satser. Har egentligen blivit mer bekväm med allt som det här programmet innehåller, jag vet sedan tidigare
+att jag är en sådan människa som lär mig bäst genom att göra och inte läsa alldeles för mycket (glömmer ofta bort det om jag inte använder det). 
+
+
+
+

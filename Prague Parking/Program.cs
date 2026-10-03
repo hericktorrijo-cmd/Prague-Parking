@@ -12,7 +12,7 @@ for (int i = 0; i < garageSpaces.Length; i++)
 
 Menu(garageSpaces);
 
-
+//Menyn, start av programmet
 static void Menu(string[] garageSpaces)
 {
     while (true)
@@ -23,6 +23,7 @@ static void Menu(string[] garageSpaces)
         Console.WriteLine("3. Flytta fordon manuellt");
         Console.WriteLine("4. Visa platser");
         Console.WriteLine("5. Visa specifik plats");
+        Console.WriteLine("6. Leta efter fordon");
         Console.WriteLine("0. Avsluta");
         Console.Write("Välj ett alternativ: ");
 
@@ -55,6 +56,9 @@ static void Menu(string[] garageSpaces)
                 break;
             case 5:
                 SpecificSpot(garageSpaces);
+                break;
+            case 6:
+                SearchVehicle(garageSpaces);
                 break;
             case 0:
                 return;
@@ -184,7 +188,53 @@ static void ParkVehicle(string fullLicenceNumber, string[] garageSpaces)
         return;
     }
 }
-//Metod för att manuellt flytta fordon från en plats till en annan // MENY 2.0
+
+//Metod för att ta bort fordon // MENY 2.0
+static void RemoveVehicle(string[] garageSpaces, string licenseNumber)
+{
+
+    string fullCar = "CAR#" + licenseNumber;
+    string fullMc = "MC#" + licenseNumber;
+
+    for (int i = 0; i < garageSpaces.Length; i++)
+    {
+        string spot = garageSpaces[i];
+
+        if (spot == fullCar)
+        {
+            garageSpaces[i] = "LEDIG";
+            Console.WriteLine($"{fullCar} borttaget från plats {i + 1}");
+            return;
+        }
+        if (spot.Contains(fullMc))
+        {
+            string[] mcList = spot.Split(" | ");
+
+            List<string> remaining = new List<string>();
+
+            for (int j = 0; j < mcList.Length; j++)
+            {
+                if (mcList[j] != fullMc)
+                {
+                    remaining.Add(mcList[j]);
+                }
+            }
+
+            if (remaining.Count == 0)
+            {
+                garageSpaces[i] = "LEDIG";
+            }
+            else
+            {
+                garageSpaces[i] = string.Join(" | ", remaining);
+            }
+            Console.WriteLine($"{fullMc} borttaget från plats {i + 1}");
+            return;
+        }
+    }
+    Console.WriteLine($"Hittade inget fordon med det angivna regristeringsnumret");
+}
+//Metod för att manuellt flytta fordon från en plats till en annan // MENY 3.0
 
 static void MoveVehicleManually(string[] garageSpaces)
 {
@@ -219,8 +269,7 @@ static void MoveVehicleManually(string[] garageSpaces)
     PlaceVehicleManually(garageSpaces, licenseNumber, isCar);
 }
 
-//Metod för att placera fordon manuellt, ska främst användas i metoden ovanför (MoveVehicleManually) // MENY 2.1
-//Det vi har är licenseNumber och vi har tagit bort den från en plats, så vi behöver att den här metoden placerar i valfri plats
+//Metod för att placera fordon manuellt, ska främst användas i metoden ovanför (MoveVehicleManually) // MENY 3.1
 static void PlaceVehicleManually(string[] garageSpaces, string licenseNumber, bool isCar)
 {
 
@@ -230,15 +279,12 @@ static void PlaceVehicleManually(string[] garageSpaces, string licenseNumber, bo
     {
         Console.Write("Vilken plats vill du parkera fordonet på: ");
         bool validInput = int.TryParse(Console.ReadLine(), out garageSpaceInt);
-        if (validInput != true)
+        if (!validInput || garageSpaceInt < 1 || garageSpaceInt > garageSpaces.Length)
         {
             Console.WriteLine("Det måste vara en plats från 1 - 100");
             continue;
         }
-        if(validInput)
-        {
-            break;
-        }
+        break;
     }
 
     string spot = garageSpaces[garageSpaceInt - 1];
@@ -296,53 +342,9 @@ static void PlaceVehicleManually(string[] garageSpaces, string licenseNumber, bo
         return;
     }
 }
-//Metod för att ta bort fordon // MENY 3.0
-static void RemoveVehicle(string[] garageSpaces, string licenseNumber)
-{
-    
-    string fullCar = "CAR#" + licenseNumber;
-    string fullMc = "MC#" + licenseNumber;
 
-    for (int i = 0; i < garageSpaces.Length; i++)
-    {
-        string spot = garageSpaces[i];
 
-        if (spot == fullCar)
-        {
-            garageSpaces[i] = "LEDIG";
-            Console.WriteLine($"{fullCar} borttaget från plats {i + 1}");
-            return;
-        }
-        if (spot.Contains(fullMc))
-        {
-            string[] mcList = spot.Split(" | ");
-
-            List<string> remaining = new List<string>();
-
-            for(int j = 0; j < mcList.Length; j++)
-            {
-                if(mcList[j] != fullMc)
-                {
-                    remaining.Add(mcList[j]);
-                }
-            }
-
-            if(remaining.Count == 0)
-            {
-                garageSpaces[i] = "LEDIG";
-            }
-            else
-            {
-                garageSpaces[i] = string.Join(" | ", remaining);
-            }
-            Console.WriteLine($"{fullMc} borttaget från plats {i + 1}");
-            return;
-        }
-    }
-    Console.WriteLine($"Hittade inget fordon med det angivna regristeringsnumret");
-}
-
-//Metod för att skriva ut tillgänglighet, man kan se samtliga platser eller mellan 2 tal // MENYVAL 3
+//Metod för att skriva ut tillgänglighet, man kan se samtliga platser eller mellan 2 tal // MENYVAL 4.0
 static void ParkingSpots(string[] garageSpaces, int min = 1, int max = 100)
 {
     int start;
@@ -367,10 +369,6 @@ static void ParkingSpots(string[] garageSpaces, int min = 1, int max = 100)
         }
         break;
     }
-    //Console.Write("Nummer 1: ");
-    //bool nummerEtt = int.TryParse(Console.ReadLine(), out min);
-    //Console.Write("Nummer 2: ");
-    //bool nummerTvå = int.TryParse(Console.ReadLine(), out max);
 
     for (int plats = start; plats <= end; plats++)
     {
@@ -395,7 +393,7 @@ static void ParkingSpots(string[] garageSpaces, int min = 1, int max = 100)
     }
 }
 
-//Metod för att se tillgänglighet på en specifik plats // MENYVAL 4
+//Metod för att se tillgänglighet på en specifik plats // MENYVAL 5.0
 static void SpecificSpot(string[] garageSpaces)
 {
     Console.WriteLine("Vilken plats vill du se: ");
@@ -424,5 +422,26 @@ static void SpecificSpot(string[] garageSpaces)
     Console.WriteLine($"Plats {number,-5} => {garageSpaces[index],-20}");
 
     Console.ResetColor();
+}
+
+//Metod för att söka fordon och kolla vart de står//MENY 6.0
+
+static void SearchVehicle(string[] garageSpaces)
+{
+    string licenseNumber = GetLicenseNumber();
+    string fullCar = "CAR#" + licenseNumber;
+    string fullMc = "MC#" + licenseNumber;
+
+    for (int i = 0; i < garageSpaces.Length; i++)
+    {
+        string spot = garageSpaces[i];
+
+        if (spot == fullCar || spot.Contains(fullMc))
+        {
+            Console.WriteLine($"Fordonet står på plats {i + 1}");
+            return;
+        }
+    }
+    Console.WriteLine("Fordonet hittades inte.");
 }
 
